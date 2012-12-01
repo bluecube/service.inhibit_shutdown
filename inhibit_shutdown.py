@@ -3,7 +3,6 @@ from __future__ import print_function
 
 import xbmc
 import subprocess
-import functools
 
 # Set of (protocol, local port) tuples.
 watched = {
@@ -12,7 +11,8 @@ watched = {
     }
 sleep_time = 60 * 1000 # sleep time between checks in miliseconds
 
-log = functools.partial(print, "service.inhibit_shutdown:")
+def log(msg):
+    print("service.inhibit_shutdown: " + msg)
 
 def check_services():
     """ Check if any of the watched services is running. """
@@ -34,9 +34,7 @@ def check_services():
 
 while not xbmc.abortRequested:
     if check_services():
-        log("Inhibiting idle shutdown")
         xbmc.executebuiltin('InhibitIdleShutdown(true)')
     else:
-        log("Allowing idle shutdown")
         xbmc.executebuiltin('InhibitIdleShutdown(false)')
     xbmc.sleep(sleep_time)
