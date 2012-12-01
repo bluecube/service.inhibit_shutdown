@@ -22,7 +22,7 @@ def check_services():
         proto = items[0]
         port = int(items[3].split(':')[-1])
 
-        if (proto, port) in accepted:
+        if (proto, port) in watched:
             print("{}: Found {} connection from {} to port {}".format(service_name, proto, items[4], port))
             return True
 
@@ -30,7 +30,7 @@ def check_services():
     return False
 
 while not xbmc.abortRequested:
-    if check_services:
+    if check_services():
         print("{}: Inhibiting idle shutdown".format(service_name))
         xbmc.executebuiltin('InhibitIdleShutdown')
     else:
