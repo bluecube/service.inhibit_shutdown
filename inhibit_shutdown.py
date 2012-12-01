@@ -1,7 +1,9 @@
 #!/usr/bin/python
+from __future__ import print_function
 
 import xbmc
 import subprocess
+import functools
 
 # Set of (protocol, local port) tuples.
 watched = {
@@ -9,7 +11,8 @@ watched = {
     ('tcp', 445), # samba
     }
 sleep_time = 60 * 1000 # sleep time between checks in miliseconds
-service_name = 'service.inhibit_shutdown'
+
+log = functools.partial(print, "service.inhibit_shutdown:")
 
 def check_services():
     """ Check if any of the watched services is running. """
@@ -23,10 +26,10 @@ def check_services():
         port = int(items[3].split(':')[-1])
 
         if (proto, port) in watched:
-            print("{}: Found {} connection from {} to port {}".format(service_name, proto, items[4], port))
+            log("Found {} connection from {} to port {}".format(proto, items[4], port))
             return True
 
-    print("{} No connection found.".format(service_name))
+    log("No connection found.")
     return False
 
 while not xbmc.abortRequested:
