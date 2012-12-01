@@ -34,9 +34,9 @@ def check_services():
 
 while not xbmc.abortRequested:
     if check_services():
-        print("{}: Inhibiting idle shutdown".format(service_name))
+        log("Inhibiting idle shutdown")
         xbmc.executebuiltin('InhibitIdleShutdown(true)')
     else:
-        print("{}: Allowing idle shutdown".format(service_name))
+        log("Allowing idle shutdown")
         xbmc.executebuiltin('InhibitIdleShutdown(false)')
     xbmc.sleep(sleep_time)
