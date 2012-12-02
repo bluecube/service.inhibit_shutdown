@@ -12,7 +12,7 @@ watched = {
 sleep_time = 60 * 1000 # sleep time between checks in miliseconds
 
 def log(msg):
-    print("service.inhibit_shutdown: " + msg)
+    print("service.inhibit_shutdown: {}".format(msg))
 
 def check_services():
     """ Check if any of the watched services is running. """
@@ -21,6 +21,8 @@ def check_services():
 
     for line in netstat.split('\n')[2:]:
         items = line.split()
+        if len(items) < 4:
+            continue
 
         proto = items[0]
         port = int(items[3].split(':')[-1])
