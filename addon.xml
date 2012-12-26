@@ -6,7 +6,7 @@
     <extension point="xbmc.service" library="inhibit_shutdown.py" start="[login|startup]" />
     <extension point="xbmc.addon.metadata">
         <platform>linux</platform>
-        <summary lang="en">Inhibit idle shutdown when TCP or UDP conections are open.</summary>
-        <description>Inhibit idle shutdown when specified network connections are opened to this computer. Currently not configurable, watches for SSH and SMB connections (TCP ports 22 and 445).</description>
+        <summary lang="en">Inhibit idle shutdown when TCP conections are open.</summary>
+        <description>Inhibit idle shutdown when specified network connections are opened to this computer.</description>
     </extension>
 </addon>
