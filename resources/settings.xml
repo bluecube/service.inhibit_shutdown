@@ -3,6 +3,6 @@
     <category label="Settings">
         <setting label="Watched ports (remote connections only)" type="text" id="remoteports" default="22, 445" />
         <setting label="Watched ports (local connections only)" type="text" id="localports" default="" />
-        <setting label="Sleep time (seconds)" type="number" id="sleep" value="60" />
+        <setting label="Sleep time (seconds)" type="number" id="sleep" default="60" />
     </category>
 </settings>
