@@ -46,7 +46,7 @@ def check_services():
 addon = xbmcaddon.Addon()
 s = addon.getSetting
 try:
-    sleep_time = float(s('sleep')) * 1000
+    sleep_time = int(float(s('sleep')) * 1000)
 except ValueError:
     sleep_time = 60 * 1000
 watched_local = port_set(s('localports'))
