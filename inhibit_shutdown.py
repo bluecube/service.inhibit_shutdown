@@ -29,8 +29,8 @@ def check_services():
         if len(items) < 4:
             continue
 
-        local_addr, local_port = items[3].rsplit(':', maxsplit=1)
-        remote_addr, remote_port = items[4].rsplit(':', maxsplit=1)
+        local_addr, local_port = items[3].rsplit(':', 1)
+        remote_addr, remote_port = items[4].rsplit(':', 1)
 
         if local_addr[0] == '[' and local_addr[-1] == ']':
             local_addr = local_addr[1:-1]
