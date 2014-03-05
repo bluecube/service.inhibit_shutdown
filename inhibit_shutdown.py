@@ -6,6 +6,13 @@ import xbmcaddon
 import subprocess
 import re
 
+class MyMonitor( xbmc.Monitor ):
+    def __init__( self, *args, **kwargs ):
+        xbmc.Monitor.__init__( self )
+
+    def onSettingsChanged( self ):
+        load_settings()
+
 def port_set(string):
     ret = set()
     for port in re.findall("[0-9]+", string):
@@ -48,20 +55,23 @@ def check_services():
     log("No connection found.")
     return False
 
+def load_settings():
+    global watched_local,watched_remote,sleep_time
+    s = addon.getSetting
+    try:
+        sleep_time = int(float(s('sleep')) * 1000)
+    except ValueError:
+        sleep_time = 60 * 1000
+    watched_local = port_set(s('localports'))
+    watched_remote = port_set(s('remoteports'))
+    log("Watching for remote connections to ports {} and for local connections to ports {}, sleep time is {:0.2f} s.".format(
+        ', '.join(str(x) for x in watched_remote),
+        ', '.join(str(x) for x in watched_local),
+        sleep_time / 1000.0))
 
 addon = xbmcaddon.Addon()
-s = addon.getSetting
-try:
-    sleep_time = int(float(s('sleep')) * 1000)
-except ValueError:
-    sleep_time = 60 * 1000
-watched_local = port_set(s('localports'))
-watched_remote = port_set(s('remoteports'))
-
-log("Watching for remote connections to ports {} and for local connections to ports {}, sleep time is {:0.2f} s.".format(
-    ', '.join(str(x) for x in watched_remote),
-    ', '.join(str(x) for x in watched_local),
-    sleep_time / 1000.0))
+monitor = MyMonitor()
+load_settings()
 
 while not xbmc.abortRequested:
     if check_services():
